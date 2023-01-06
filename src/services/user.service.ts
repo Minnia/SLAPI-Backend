@@ -17,7 +17,7 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  getUser(): Promise<User> {
-    return this.userModel.findOne().exec();
+  getUser(id: string | number): Promise<User> {
+    return this.userModel.findById(id).exec();
   }
 }

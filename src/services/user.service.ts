@@ -8,9 +8,20 @@ import { CreateUserDto } from '../dtos/CreateUserDto';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(CreateUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(CreateUserDto);
-    return createdUser.save();
+  async create(dto: CreateUserDto): Promise<User> {
+    //if it does not contain all the information requested, throw error
+    try {
+      const createdUser = await this.userModel.create({
+        data: {
+          firstName: dto.firstName,
+          lastName: dto.lastName,
+          age: dto.age,
+        },
+      });
+      return createdUser.save();
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findAll(): Promise<User[]> {
@@ -19,5 +30,8 @@ export class UserService {
 
   getUser(id: string | number): Promise<User> {
     return this.userModel.findById(id).exec();
+  }
+  deleteUser(id: string): Promise<User> {
+    return this.userModel.findByIdAndDelete(id).exec();
   }
 }

@@ -10,7 +10,7 @@ export class AuthDto {
   @IsInt()
   age: number;
 
-  id: string | number;
+  id: string;
 
   @IsString()
   @IsNotEmpty()

@@ -17,7 +17,7 @@ export class UserController {
   }
   @Get('user')
   getUser(@Query('id') id: string): Promise<User> {
-    return this.userService.getUser(id);
+    return this.userService.getUserById(id);
   }
   @Delete('user-by-id')
   deleteUser(@Query('id') id: string): Promise<User> {

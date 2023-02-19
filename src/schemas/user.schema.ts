@@ -13,6 +13,12 @@ export class User {
 
   @Prop()
   age: number;
+
+  @Prop()
+  id: string;
+
+  @Prop()
+  password: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

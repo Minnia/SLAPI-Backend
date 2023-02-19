@@ -16,6 +16,8 @@ export class UserService {
           firstName: dto.firstName,
           lastName: dto.lastName,
           age: dto.age,
+          id: dto.id,
+          password: dto.password,
         },
       });
       return createdUser.save();
@@ -28,7 +30,7 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  getUser(id: string | number): Promise<User> {
+  getUserById(id: string | number): Promise<User> {
     return this.userModel.findById(id).exec();
   }
   deleteUser(id: string): Promise<User> {

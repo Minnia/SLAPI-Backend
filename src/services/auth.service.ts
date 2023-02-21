@@ -10,7 +10,9 @@ export class AuthService {
   constructor(
     @Inject(UserService)
     private userService: UserService,
+    @Inject(JwtService)
     private jwt: JwtService,
+    @Inject(ConfigService)
     private config: ConfigService,
   ) {}
 
@@ -21,10 +23,9 @@ export class AuthService {
         firstName: auth.firstName,
         lastName: auth.lastName,
         age: auth.age,
-        id: auth.id,
         password: hash,
       });
-      return this.signup(user);
+      return user;
     } catch (error) {
       throw error;
     }
@@ -33,15 +34,14 @@ export class AuthService {
   //sign in if user exists
   //if user does not exist, throw error
   async signin(@Body() auth: AuthDto) {
-    const { id } = auth;
     try {
       // const user = this.userService.getUserById(id);
-      const user = await this.userService.getUserById(id);
+      const user = await this.userService.getUserByName(auth.firstName);
       if (!user) throw new ForbiddenException('Credentials incorrect');
       const pwMatches = argon.verify(user.password, auth.password);
       if (!pwMatches) throw new ForbiddenException('Password does not match');
 
-      return this.signToken(user.id, user.lastName);
+      return this.signToken(user.firstName, user.lastName);
     } catch (error) {
       throw error;
     }

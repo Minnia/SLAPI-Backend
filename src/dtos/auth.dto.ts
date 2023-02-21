@@ -10,8 +10,6 @@ export class AuthDto {
   @IsInt()
   age: number;
 
-  id: string;
-
   @IsString()
   @IsNotEmpty()
   password: string;

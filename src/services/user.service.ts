@@ -12,13 +12,10 @@ export class UserService {
     //if it does not contain all the information requested, throw error
     try {
       const createdUser = await this.userModel.create({
-        data: {
-          firstName: dto.firstName,
-          lastName: dto.lastName,
-          age: dto.age,
-          id: dto.id,
-          password: dto.password,
-        },
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        age: dto.age,
+        password: dto.password,
       });
       return createdUser.save();
     } catch (error) {
@@ -32,6 +29,12 @@ export class UserService {
 
   getUserById(id: string | number): Promise<User> {
     return this.userModel.findById(id).exec();
+  }
+  getUserByName(firstName: string): Promise<User> {
+    return this.userModel.findOne({ firstName }).exec();
+  }
+  deleteAllUsers(name:string): Promise<User> {
+    return this.userModel.findByIdAndDelete(name).exec();
   }
   deleteUser(id: string): Promise<User> {
     return this.userModel.findByIdAndDelete(id).exec();

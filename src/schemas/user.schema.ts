@@ -15,9 +15,6 @@ export class User {
   age: number;
 
   @Prop()
-  id: string;
-
-  @Prop()
   password: string;
 }
 
